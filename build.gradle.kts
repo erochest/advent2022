@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.github.ajalt.clikt:clikt:3.5.0")
     testImplementation(kotlin("test"))
     testImplementation("com.github.stefanbirkner:system-lambda:1.2.1")
 }
