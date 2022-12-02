@@ -23,4 +23,12 @@ class TestMain {
         }
         assertEquals("45000", systemOut.trim())
     }
+
+    @Test
+    fun testDay02ARuns() {
+        val systemOut = tapSystemOut {
+            main(arrayListOf("--test", "--day", "02A").toTypedArray())
+        }
+        assertEquals("15", systemOut.trim())
+    }
 }

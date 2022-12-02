@@ -1,14 +1,14 @@
 package com.ericrochester.advent2022
 
-class Day01 {
-    fun runA(inputData: String): Int {
+class Day01: DayRuns {
+    override fun runA(inputData: String): Int {
         val maxCalorieSums = paragraphs(inputData.lines()).map {
             it.sumOf { line: String -> line.toInt() }
         }.sortedDescending()
         return maxCalorieSums.first()
     }
 
-    fun runB(inputData: String): Int {
+    override fun runB(inputData: String): Int {
         val maxCalorieSums = paragraphs(inputData.lines()).map {
             it.sumOf { line: String -> line.toInt() }
         }.sortedDescending()
