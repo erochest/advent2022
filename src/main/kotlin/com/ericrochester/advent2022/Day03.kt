@@ -1,5 +1,8 @@
 package com.ericrochester.advent2022
 
+typealias RuckSackA = Pair<Set<Char>, Set<Char>>
+typealias ElfGroup = List<RuckSackA>
+
 class Day03 : DayRuns {
     override fun runA(inputData: String): Int {
         return inputData.lines()
@@ -10,9 +13,18 @@ class Day03 : DayRuns {
             }
     }
 
-    override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
-    }
+    override fun runB(inputData: String): Int =
+        inputData.lines().chunked(3)
+            .sumOf { groupLines: List<String> ->
+                groupChecksum(parseGroup(groupLines))
+            }
+
+    private fun groupChecksum(group: ElfGroup): Int = group
+        .map { it.first.union(it.second) }
+        .reduce { accum: Set<Char>, item: Set<Char> ->
+            accum.intersect(item)
+        }
+        .sumOf { itemPriority(it) }
 
     fun parseRuckSackA(line: String): RuckSackA {
         val midpoint = line.length / 2
@@ -28,6 +40,7 @@ class Day03 : DayRuns {
             (item.code - 'A'.code) + 27
     }
 
-}
+    fun parseGroup(input: List<String>): ElfGroup =
+        input.map { parseRuckSackA(it) }
 
-typealias RuckSackA = Pair<Set<Char>, Set<Char>>
+}
