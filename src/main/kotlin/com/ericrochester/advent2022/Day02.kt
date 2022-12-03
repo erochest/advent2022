@@ -11,9 +11,16 @@ class Day02: DayRuns {
                 accum + score
             }
 
-    override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
-    }
+    override fun runB(inputData: String): Int =
+        inputData.lines()
+            .filter { it.isNotEmpty() }
+            .fold(0) { accum: Int, line: String ->
+                val opponent = RockPaperScissors.parse(line[0])
+                val target = GameOutcome.parse(line[2])
+                val player = GameOutcome.targetOutcome(opponent, target)
+                val score = GameScore.score(opponent, player)
+                accum + score
+            }
 }
 
 enum class RockPaperScissors {
@@ -31,7 +38,25 @@ enum class RockPaperScissors {
 }
 
 enum class GameOutcome {
-    Win, Lose, Draw
+    Win, Lose, Draw;
+
+    companion object {
+        fun parse(c: Char): GameOutcome {
+            return when (c) {
+                'Z' -> Win
+                'X' -> Lose
+                else -> Draw
+            }
+        }
+
+        fun targetOutcome(opponent: RockPaperScissors, target: GameOutcome): RockPaperScissors {
+            return when (target) {
+                Win -> RockPaperScissors.values()[(opponent.ordinal + 1) % 3]
+                Lose -> RockPaperScissors.values()[(opponent.ordinal + 2) % 3]
+                Draw -> opponent
+            }
+        }
+    }
 }
 
 object GameScore {
@@ -51,9 +76,7 @@ object GameScore {
     private fun won(opponent: RockPaperScissors, player: RockPaperScissors): GameOutcome {
         return if (opponent == player) {
             GameOutcome.Draw
-        } else if ((opponent == RockPaperScissors.ROCK && player == RockPaperScissors.PAPER) ||
-            (opponent == RockPaperScissors.SCISSORS && player == RockPaperScissors.ROCK) ||
-            (opponent == RockPaperScissors.PAPER && player == RockPaperScissors.SCISSORS)) {
+        } else if ((opponent.ordinal + 1) % 3 == player.ordinal) {
             GameOutcome.Win
         } else {
             GameOutcome.Lose
