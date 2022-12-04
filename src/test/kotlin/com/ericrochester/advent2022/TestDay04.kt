@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 class TestDay04 {
-    private val inputData = javaClass.getResource("/examples/day04.txt").readText()
+    private val inputData = javaClass.getResource("/examples/day04.txt")?.readText() ?: ""
     private val day04 = Day04()
 
     @Test
