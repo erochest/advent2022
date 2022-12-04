@@ -15,6 +15,12 @@ class TestDay04 {
     }
 
     @Test
+    fun testDay04RunB() {
+        val output = day04.runB(inputData)
+        assertEquals(4, output)
+    }
+
+    @Test
     fun testParseAssignmentPairs() {
         val expected = Pair(setOf(2, 3, 4), setOf(6, 7, 8))
         assertEquals(expected, day04.parseAssignmentPairs("2-4,6-8"))

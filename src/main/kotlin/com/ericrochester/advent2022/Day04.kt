@@ -6,12 +6,12 @@ class Day04: DayRuns {
     override fun runA(inputData: String): Int =
         inputData.lines()
             .map { parseAssignmentPairs(it) }
-            .filter { isOneSubsumed(it) }
-            .count()
+            .count { isOneSubsumed(it) }
 
-    override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
-    }
+    override fun runB(inputData: String): Int =
+        inputData.lines()
+            .map { parseAssignmentPairs(it) }
+            .count { it.first.intersect(it.second).isNotEmpty() }
 
     fun parseAssignmentPairs(input: String): AssignmentPair {
         return input.split(',')
