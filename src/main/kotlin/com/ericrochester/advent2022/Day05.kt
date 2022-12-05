@@ -1,10 +1,10 @@
 package com.ericrochester.advent2022
 
-class Day05: DayRuns<String, Int> {
+class Day05: DayRuns<String, String> {
     override fun runA(inputData: String): String {
-        var lines = inputData.lines()
+        val lines = inputData.lines()
         val stacks = parseStacks(lines.takeWhile { it.isNotBlank() })
-        val stackMoves = lines
+        lines
             .takeLastWhile { it.isNotBlank() }
             .map { parseStackMove(it) }
             .forEach {
@@ -15,8 +15,17 @@ class Day05: DayRuns<String, Int> {
         return stacks.peekAll().joinToString("")
     }
 
-    override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
+    override fun runB(inputData: String): String {
+        val lines = inputData.lines()
+        val stacks = parseStacks(lines.takeWhile { it.isNotBlank() })
+        lines
+            .takeLastWhile { it.isNotBlank() }
+            .map { parseStackMove(it) }
+            .forEach {
+                stacks.makeStackMoveB(it)
+            }
+
+        return stacks.peekAll().joinToString("")
     }
 
     fun parseStacks(input: List<String>): ElfStacks {
@@ -85,6 +94,15 @@ class ElfStacks {
             val item = stacks[move.from - 1].removeLast()
             stacks[move.to - 1].addLast(item)
         }
+    }
+
+    fun makeStackMoveB(move: StackMove) {
+        val buffer = mutableListOf<Char>()
+        repeat(move.n) {
+            val item = stacks[move.from - 1].removeLast()
+            buffer.add(0, item)
+        }
+        stacks[move.to - 1].addAll(buffer)
     }
 }
 

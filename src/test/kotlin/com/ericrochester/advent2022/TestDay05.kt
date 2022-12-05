@@ -16,7 +16,7 @@ class TestDay05 {
     @Test
     fun testDay05RunB() {
         val output = day.runB(inputData)
-        assertEquals(TODO(), output)
+        assertEquals("MCD", output)
     }
 
     @Test
@@ -76,6 +76,41 @@ class TestDay05 {
         stacks.makeStackMove(move)
         assertEquals(expected, stacks)
     }
+
+    @Test
+    fun testMakeStackMoveBSingle() {
+        val stacks = ElfStacks.withStacks(
+            ArrayDeque(listOf('Z', 'N')),
+            ArrayDeque(listOf('M', 'C', 'D')),
+            ArrayDeque(listOf('P'))
+        )
+        val move = StackMove(1, 2, 1)
+        val expected = ElfStacks.withStacks(
+            ArrayDeque(listOf('Z', 'N', 'D')),
+            ArrayDeque(listOf('M', 'C')),
+            ArrayDeque(listOf('P'))
+        )
+        stacks.makeStackMoveB(move)
+        assertEquals(expected, stacks)
+    }
+
+    @Test
+    fun testMakeStackMoveBMultiple() {
+        val stacks = ElfStacks.withStacks(
+            ArrayDeque(listOf('Z', 'N', 'D')),
+            ArrayDeque(listOf('M', 'C')),
+            ArrayDeque(listOf('P'))
+        )
+        val move = StackMove(3, 1, 3)
+        val expected = ElfStacks.withStacks(
+            ArrayDeque(listOf()),
+            ArrayDeque(listOf('M', 'C')),
+            ArrayDeque(listOf('P', 'Z', 'N', 'D'))
+        )
+        stacks.makeStackMoveB(move)
+        assertEquals(expected, stacks)
+    }
+
 
     @Test
     fun testPeekAll() {
