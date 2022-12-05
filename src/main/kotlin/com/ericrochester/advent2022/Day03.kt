@@ -3,7 +3,7 @@ package com.ericrochester.advent2022
 typealias RuckSackA = Pair<Set<Char>, Set<Char>>
 typealias ElfGroup = List<RuckSackA>
 
-class Day03 : DayRuns {
+class Day03 : DayRuns<Int, Int> {
     override fun runA(inputData: String): Int {
         return inputData.lines()
             .sumOf { line: String ->

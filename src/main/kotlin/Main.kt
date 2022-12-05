@@ -20,7 +20,7 @@ class Advent2022: CliktCommand() {
         val inputData =  ResourceReader.readResource(resourceName)
         val className = "com.ericrochester.advent2022.Day%02d".format(dayNumber)
         val cls = Class.forName(className)
-        val dayInstance = cls.getDeclaredConstructor().newInstance() as DayRuns
+        val dayInstance = cls.getDeclaredConstructor().newInstance() as DayRuns<*, *>
         val output = if (day?.endsWith('a', true) != false) {
             dayInstance.runA(inputData)
         } else {

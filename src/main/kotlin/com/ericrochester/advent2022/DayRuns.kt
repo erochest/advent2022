@@ -1,6 +1,6 @@
 package com.ericrochester.advent2022
 
-interface DayRuns {
-    fun runA(inputData: String): Int
-    fun runB(inputData: String): Int
+interface DayRuns<A, B> {
+    fun runA(inputData: String): A
+    fun runB(inputData: String): B
 }

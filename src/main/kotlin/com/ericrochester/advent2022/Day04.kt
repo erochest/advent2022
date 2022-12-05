@@ -2,7 +2,7 @@ package com.ericrochester.advent2022
 
 typealias AssignmentPair = Pair<Set<Int>, Set<Int>>
 
-class Day04: DayRuns {
+class Day04: DayRuns<Int, Int> {
     override fun runA(inputData: String): Int =
         inputData.lines()
             .map { parseAssignmentPairs(it) }

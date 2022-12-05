@@ -1,6 +1,6 @@
 package com.ericrochester.advent2022
 
-class Day02: DayRuns {
+class Day02: DayRuns<Int, Int> {
     override fun runA(inputData: String): Int =
         inputData.lines()
             .filter { it.isNotEmpty() }
