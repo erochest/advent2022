@@ -10,7 +10,12 @@ class TestDay06 {
     @Test
     fun testDay06RunA() {
         val output = day.runA(inputData)
-        assertEquals(TODO(), output)
+        assertEquals(7, output)
+
+        assertEquals(5, day.runA("bvwbjplbgvbhsrlpgdmjqwftvncz"))
+        assertEquals(6, day.runA("nppdvjthqldpwncqszvftbrmjlhg"))
+        assertEquals(10, day.runA("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"))
+        assertEquals(11, day.runA("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"))
     }
 
     @Test
