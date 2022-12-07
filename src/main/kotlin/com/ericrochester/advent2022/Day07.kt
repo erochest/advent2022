@@ -1,6 +1,9 @@
 package com.ericrochester.advent2022
 
 class Day07: DayRuns<Int, Int> {
+    val fullDiskSpace = 70000000
+    val diskSpaceRequired = 30000000
+
     override fun runA(inputData: String): Int =
         inputData.lines()
             .fold(DirectoryBuilder()) { builder, line ->
@@ -12,7 +15,22 @@ class Day07: DayRuns<Int, Int> {
             .sumOf { it.size }
 
     override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
+        val directoryBuilder = inputData.lines()
+            .fold(DirectoryBuilder()) { builder, line ->
+                builder.exec(line)
+                builder
+            }
+
+        val currentSizeUsed = directoryBuilder.tree.size
+        val currentFreeSpace = fullDiskSpace - currentSizeUsed
+        val needToFree = diskSpaceRequired - currentFreeSpace
+
+        return directoryBuilder
+            .allDirectories()
+            .sortedBy { it.size }
+            .dropWhile { it.size < needToFree }
+            .first()
+            .size
     }
 
 }

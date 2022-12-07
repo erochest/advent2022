@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
-import kotlin.test.fail
 
 class TestDay07 {
     private val inputData = javaClass.getResource("/examples/day07.txt")?.readText() ?: ""
@@ -19,7 +18,7 @@ class TestDay07 {
      @Test
      fun testDay07RunB() {
          val output = day.runB(inputData)
-         assertEquals(TODO(), output)
+         assertEquals(24933642, output)
      }
 
     @Test
