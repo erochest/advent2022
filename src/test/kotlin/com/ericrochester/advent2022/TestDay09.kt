@@ -21,7 +21,7 @@ class TestDay09 {
     }
 
     @Test fun testParseDirection() {
-        val direction = day.parseDirection("R 4")
+        val direction = DirectionPair.parse("R 4")
         assertEquals(DirectionPair(Direction.Right, 4), direction)
     }
 
@@ -38,7 +38,7 @@ class TestDay09 {
         assertEquals(Pair(1, 0), board.tail)
     }
 
-    @Test fun MoveTailFollowsDiagonal() {
+    @Test fun testMoveTailFollowsDiagonal() {
         val board = Board(Pair(1, 1), Pair(0, 0))
         board.move(Direction.Up)
         assertEquals(Pair(1, 2), board.head)

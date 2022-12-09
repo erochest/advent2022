@@ -6,7 +6,7 @@ import kotlin.math.sign
 class Day09: DayRuns<Int, Int> {
     override fun runA(inputData: String): Int =
         inputData.lines()
-            .map { parseDirection(it) }
+            .map { DirectionPair.parse(it) }
             .fold(Board(Pair(0, 0), Pair(0, 0))) { board, dirPair ->
                 board.move(dirPair)
                 board
@@ -18,21 +18,24 @@ class Day09: DayRuns<Int, Int> {
         TODO("Not yet implemented")
     }
 
-    fun parseDirection(input: String): DirectionPair {
-        val parts = input.split(" ")
-        val dir = when (parts[0]) {
-            "R"  -> Direction.Right
-            "L"  -> Direction.Left
-            "U"  -> Direction.Up
-            else -> Direction.Down
-        }
-        val dist = parts[1].toInt()
-        return DirectionPair(dir, dist)
-    }
 
 }
 
-data class DirectionPair(val direction: Direction, val distance: Int)
+data class DirectionPair(val direction: Direction, val distance: Int) {
+    companion object {
+        fun parse(input: String): DirectionPair {
+            val parts = input.split(" ")
+            val dir = when (parts[0]) {
+                "R"  -> Direction.Right
+                "L"  -> Direction.Left
+                "U"  -> Direction.Up
+                else -> Direction.Down
+            }
+            val dist = parts[1].toInt()
+            return DirectionPair(dir, dist)
+        }
+    }
+}
 
 enum class Direction {
     Right,
