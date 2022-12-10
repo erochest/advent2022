@@ -7,7 +7,7 @@ class Day09: DayRuns<Int, Int> {
     override fun runA(inputData: String): Int =
         inputData.lines()
             .map { DirectionPair.parse(it) }
-            .fold(Board(Pair(0, 0), Pair(0, 0))) { board, dirPair ->
+            .fold(Board(Pair(0, 0), mutableListOf(Pair(0, 0)))) { board, dirPair ->
                 board.move(dirPair)
                 board
             }
@@ -15,7 +15,19 @@ class Day09: DayRuns<Int, Int> {
             .size
 
     override fun runB(inputData: String): Int {
-        TODO("Not yet implemented")
+        val tail = mutableListOf<Pair<Int,Int>>()
+        repeat(9) { tail.add(Pair(0, 0)) }
+
+        val startBoard = Board(Pair(0, 0), tail)
+
+        return inputData.lines()
+            .map { DirectionPair.parse(it) }
+            .fold(startBoard) { board, dirPair ->
+                board.move(dirPair)
+                board
+            }
+            .tailTrack
+            .size
     }
 
 
@@ -44,11 +56,12 @@ enum class Direction {
     Down
 }
 
-data class Board(var head: Pair<Int, Int>, var tail: Pair<Int, Int>) {
+data class Board(var head: Pair<Int, Int>, var tail: MutableList<Pair<Int, Int>>) {
     val tailTrack = mutableSetOf<Pair<Int, Int>>()
 
     init {
-        tailTrack.add(tail)
+        tailTrack.add(tail.last())
+//        println(">>> ${tail.size} / ${tail.last()}")
     }
 
     fun move(direction: Direction) {
@@ -59,19 +72,29 @@ data class Board(var head: Pair<Int, Int>, var tail: Pair<Int, Int>) {
             Direction.Down -> head.copy(second=head.second-1)
         }
 
-        if (abs(head.first - tail.first) > 1 || abs(head.second - tail.second) > 1) {
-            tail = if (head.first == tail.first) {
-                tail.copy(second=tail.second+(head.second-tail.second).sign)
-            } else if (head.second == tail.second) {
-                tail.copy(first=tail.first+(head.first-tail.first).sign)
-            } else {
-                Pair(
-                    tail.first+(head.first-tail.first).sign,
-                    tail.second+(head.second-tail.second).sign
-                )
+        var parent = head
+        for (pair in tail.withIndex()) {
+            val child = pair.value
+
+            if (parent != child && (abs(parent.first -child.first) > 1 || abs(parent.second -child.second) > 1)) {
+                tail[pair.index] = if (parent.first ==child.first) {
+                    child.copy(second =child.second + (parent.second -child.second).sign)
+                } else if (parent.second ==child.second) {
+                    child.copy(first =child.first + (parent.first -child.first).sign)
+                } else {
+                    Pair(
+                        child.first + (parent.first -child.first).sign,
+                        child.second + (parent.second -child.second).sign
+                    )
+                }
             }
-            tailTrack.add(tail)
+//            println("\t#${pair.index}. ${parent} / ${child} -> ${tail[pair.index]}")
+
+            parent = tail[pair.index]
         }
+
+        tailTrack.add(tail.last())
+//        println(">>> ${tail.last()} ! ${tailTrack.size}")
     }
 
     fun move(directionPair: DirectionPair) {
