@@ -13,9 +13,15 @@ class TestDay10 {
         assertEquals(13140, output)
     }
 
-    @Ignore @Test fun testDay10RunB() {
+    @Test fun testDay10RunB() {
         val output = day.runB(inputData)
-        assertEquals(TODO(), output)
+        val expected = """##..##..##..##..##..##..##..##..##..##..
+                                |###...###...###...###...###...###...###.
+                                |####....####....####....####....####....
+                                |#####.....#####.....#####.....#####.....
+                                |######......######......######......####
+                                |#######.......#######.......#######.....""".trimMargin()
+        assertEquals(expected, output)
     }
 
     @Test fun testExecuteStartsWithEmptyList() {
@@ -54,10 +60,42 @@ class TestDay10 {
         assertEquals(listOf(1, 1), cpu.history)
     }
 
-    @Test fun signalStrength() {
+    @Test fun testSignalStrength() {
         val cpuOutput = listOf(1, 1, 1, 4, 4, -1)
         assertEquals(16, signalStrength(cpuOutput, 4))
         assertEquals(20, signalStrength(cpuOutput, 5))
         assertEquals(-6, signalStrength(cpuOutput, 6))
+    }
+
+    @Test fun testDrawPixel() {
+//        "##.##."
+        val cpuOutput = listOf(1, 1, 1, 4, 4, -1)
+        assertEquals('#', drawPixel(1, 1))
+        assertEquals('#', drawPixel(1, 2))
+        assertEquals('.', drawPixel(1, 3))
+        assertEquals('#', drawPixel(4, 4))
+        assertEquals('#', drawPixel(4, 5))
+        assertEquals('.', drawPixel(-1, 6))
+        assertEquals('#', drawPixel(8, 9))
+    }
+
+    @Test fun testFirstRow() {
+        val history = execute(inputData.lines())
+        val expected = "##..##..##..##..##..##..##..##..##..##.."
+        for (pair in expected.withIndex()) {
+            val actual = drawPixel(history[pair.index], pair.index)
+//            println(">>> ${pair}, ${history[pair.index]} => ${actual}")
+            assertEquals(pair.value, actual)
+        }
+    }
+
+    @Test fun testSecondRow() {
+        val history = execute(inputData.lines())
+        val expected = "###...###...###...###...###...###...###"
+        for (pair in expected.withIndex().drop(40)) {
+            val actual = drawPixel(history[pair.index], pair.index)
+//            println(">>> ${pair}, ${history[pair.index]} => ${actual}")
+            assertEquals(pair.value, actual)
+        }
     }
 }
