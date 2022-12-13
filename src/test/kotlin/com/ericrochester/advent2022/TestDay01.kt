@@ -15,7 +15,7 @@ class TestDay01 {
 
     @Test
     fun testParagraphs() {
-        val paras = day01.paragraphs(inputData.lines())
+        val paras = paragraphs(inputData.lines())
         val expected = listOf(
             listOf("1000", "2000", "3000"),
             listOf("4000"),
