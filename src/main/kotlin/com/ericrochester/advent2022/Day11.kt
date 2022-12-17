@@ -14,11 +14,26 @@ class Day11: DayRuns<Int,Int> {
                     monkeys[throws.target].catchItem(throws.worryAmount)
                 }
             }
+            dumpRound(it, monkeys)
         }
+        dumpItemsSeen(monkeys)
+
         val busiest = monkeys.sortedByDescending { it.itemsSeen }.take(2)
-        println("busiest 1: ${busiest[0]} / ${busiest[0].itemsSeen}")
-        println("busiest 2: ${busiest[1]} / ${busiest[1].itemsSeen}")
         return busiest[0].itemsSeen * busiest[1].itemsSeen
+    }
+
+    private fun dumpRound(i: Int, monkeys: List<Monkey>) {
+        println("Round $i")
+        for (monkey in monkeys) {
+            println("Monkey ${monkey.n}: ${monkey.items.joinToString(", ")}")
+        }
+        println()
+    }
+
+    private fun dumpItemsSeen(monkeys: List<Monkey>) {
+        for (monkey in monkeys) {
+            println("Monkey ${monkey.n} inspected items ${monkey.itemsSeen} times.")
+        }
     }
 
     override fun runB(inputData: String): Int {
@@ -52,6 +67,7 @@ data class Monkey(
             throws.add(ThrowInfo(target, current))
         }
 
+        println("### ${n}. $throws")
         return throws
     }
 
