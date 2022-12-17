@@ -9,6 +9,13 @@ def test_run_a():
     assert(10605 == output)
 
 
+def test_run_b():
+    input_file = './src/test/resources/examples/day11.txt'
+    with open(input_file) as f:
+        output = day11.run_b(f)
+    assert(2713310158 == output)
+
+
 MONKEY1 = '''\
 Monkey 1:
   Starting items: 54, 65, 75, 74
@@ -20,7 +27,7 @@ Monkey 1:
 
 
 def test_parse_monkey():
-    monkey = day11.Monkey.parse(MONKEY1.splitlines())
+    monkey = day11.Monkey.parse(MONKEY1.splitlines(), 3)
     assert(monkey.n == 1)
     assert(list(monkey.items) == [54, 65, 75, 74])
     assert(monkey.op == (day11.Op.PLUS, 6))
@@ -29,7 +36,7 @@ def test_parse_monkey():
 
 
 def test_monkey_process():
-    monkey = day11.Monkey.parse(MONKEY1.splitlines())
+    monkey = day11.Monkey.parse(MONKEY1.splitlines(), 3)
     output = monkey.inspect(54)
     assert(output == (0, 20))
     assert(monkey.inspected == 1)
